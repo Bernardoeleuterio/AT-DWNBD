@@ -1,0 +1,30 @@
+﻿@page
+@model AT_DWNBD.Pages.Reservas.CalcularReservaModel
+@{
+    ViewData["Title"] = "Calcular Valor da Reserva";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form method="post">
+    <div class="form-group">
+        <label for="NumeroDiarias">Número de Diárias:</label>
+        <input type="number" class="form-control" id="NumeroDiarias" asp-for="NumeroDiarias" required min="1" />
+        <span asp-validation-for="NumeroDiarias" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label for="ValorDiaria">Valor da Diária:</label>
+        <input type="number" step="0.01" class="form-control" id="ValorDiaria" asp-for="ValorDiaria" required min="0.01" />
+        <span asp-validation-for="ValorDiaria" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Calcular</button>
+</form>
+
+@if (Model.ValorTotalReserva > 0)
+{
+    <h2 class="mt-4">Resultado do Cálculo</h2>
+    <p>Número de Diárias: <strong>@Model.NumeroDiarias</strong></p>
+    <p>Valor da Diária: <strong>@Model.ValorDiaria.ToString("C")</strong></p>
+    <p>Valor Total da Reserva: <strong>@Model.ValorTotalReserva.ToString("C")</strong></p>
+}

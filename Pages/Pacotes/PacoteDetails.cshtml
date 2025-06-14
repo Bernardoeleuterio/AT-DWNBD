@@ -1,0 +1,27 @@
+﻿@page "{id:int}"
+@model AT_DWNBD.Pages.Pacotes.PacoteDetailsModel 
+@{
+    ViewData["Title"] = "Detalhes do Pacote Turístico";
+}
+
+<h1>Detalhes do Pacote Turístico</h1>
+
+@if (Model.Pacote != null)
+{
+    <div class="card p-3 mb-4">
+        <h3 class="card-title">@Model.Pacote.Titulo</h3>
+        <p class="card-text"><strong>ID:</strong> @Model.Pacote.Id</p>
+        <p class="card-text"><strong>Data de Início:</strong> @Model.Pacote.DataInicio.ToShortDateString()</p>
+        <p class="card-text"><strong>Capacidade Máxima:</strong> @Model.Pacote.CapacidadeMaxima participantes</p>
+        <p class="card-text"><strong>Preço:</strong> @Model.Pacote.Preco.ToString("C")</p>
+        
+        <a asp-page="/Pacotes/CriarPacote" class="btn btn-secondary mt-3">Voltar para a Lista de Pacotes</a>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Pacote turístico não encontrado.
+    </div>
+    <a asp-page="/Pacotes/CriarPacote" class="btn btn-secondary">Voltar para o Cadastro de Pacotes</a>
+}

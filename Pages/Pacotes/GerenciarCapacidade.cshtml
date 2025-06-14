@@ -1,0 +1,33 @@
+﻿@page
+@model AT_DWNBD.Pages.Pacotes.GerenciarCapacidadeModel
+@{
+    ViewData["Title"] = "Gerenciar Capacidade de Pacotes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Este exemplo demonstra o uso de um evento personalizado para alertar quando a capacidade máxima de um pacote turístico é atingida ou excedida.</p>
+
+<div class="card p-3 mb-4">
+    <h3>Pacote Turístico: @Model.PacoteTitulo</h3>
+    <p>Capacidade Máxima: <strong>@Model.CapacidadeMaxima</strong> participantes</p>
+    <p>Reservas Atuais: <strong>@Model.ReservasAtuais</strong></p>
+
+    @if (!string.IsNullOrEmpty(Model.MensagemStatus))
+    {
+        <div class="alert @(Model.ReservasAtuais >= Model.CapacidadeMaxima ? "alert-danger" : "alert-info") mt-3" role="alert">
+            @Model.MensagemStatus
+        </div>
+    }
+
+    <form method="post" asp-page-handler="AdicionarReserva" class="mt-3">
+        <button type="submit" class="btn btn-success" @(Model.ReservasAtuais >= Model.CapacidadeMaxima ? "disabled" : "")>
+            Adicionar Simular Reserva
+        </button>
+        @if (Model.ReservasAtuais >= Model.CapacidadeMaxima)
+        {
+            <p class="text-danger mt-2">Capacidade máxima atingida. Não é possível adicionar mais reservas.</p>
+        }
+    </form>
+</div>
+

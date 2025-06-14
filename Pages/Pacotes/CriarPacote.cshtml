@@ -1,0 +1,70 @@
+﻿@page
+@model AT_DWNBD.Pages.Pacotes.CriarPacoteModel 
+@{
+    ViewData["Title"] = "Cadastrar Novo Pacote Turístico";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Preencha os detalhes do novo pacote turístico. Todas as validações serão aplicadas.</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Pacote.Titulo"></label>
+        <input type="text" class="form-control" asp-for="Pacote.Titulo" />
+        <span asp-validation-for="Pacote.Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="Pacote.DataInicio"></label>
+        <input type="date" class="form-control" asp-for="Pacote.DataInicio" />
+        <span asp-validation-for="Pacote.DataInicio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="Pacote.CapacidadeMaxima"></label>
+        <input type="number" class="form-control" asp-for="Pacote.CapacidadeMaxima" />
+        <span asp-validation-for="Pacote.CapacidadeMaxima" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="Pacote.Preco"></label>
+        <input type="number" step="0.01" class="form-control" asp-for="Pacote.Preco" />
+        <span asp-validation-for="Pacote.Preco" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cadastrar Pacote</button>
+</form>
+
+<hr class="mt-5" />
+<h2 class="mt-4">Pacotes Cadastrados (Demonstração em Memória)</h2>
+@if (AT_DWNBD.Pages.Pacotes.CriarPacoteModel.GetPacotesCadastradas().Any())
+{
+    <ul class="list-group">
+        @foreach (var pacote in AT_DWNBD.Pages.Pacotes.CriarPacoteModel.GetPacotesCadastradas())
+        {
+            <li class="list-group-item">
+                ID: @pacote.Id - Título: @pacote.Titulo - Data Início: @pacote.DataInicio.ToShortDateString() -
+                Capacidade: @pacote.CapacidadeMaxima - Preço: @pacote.Preco.ToString("C")
+                <a asp-page="/Pacotes/PacoteDetails" asp-route-id="@pacote.Id" class="btn btn-sm btn-info float-end">Ver Detalhes</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Nenhum pacote turístico cadastrado ainda.</p>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

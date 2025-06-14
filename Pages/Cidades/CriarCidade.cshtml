@@ -1,0 +1,48 @@
+﻿@page
+@model AT_DWNBD.Pages.Cidades.CriarCidadeModel
+@{
+    ViewData["Title"] = "Cadastrar Nova Cidade";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use este formulário para cadastrar uma nova cidade destino. O nome da cidade é obrigatório e deve ter entre 3 e 100 caracteres.</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Cidade.Nome"></label>
+        <input type="text" class="form-control" asp-for="Cidade.Nome" />
+        <span asp-validation-for="Cidade.Nome" class="text-danger"></span> 
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cadastrar Cidade</button>
+</form>
+
+<hr class="mt-5" />
+<h2 class="mt-4">Cidades Cadastradas (Demonstração em Memória)</h2>
+@if (AT_DWNBD.Pages.Cidades.CriarCidadeModel.GetCidadesCadastradas().Any())
+{
+    <ul class="list-group">
+        @foreach (var cidade in AT_DWNBD.Pages.Cidades.CriarCidadeModel.GetCidadesCadastradas())
+        {
+            <li class="list-group-item">ID: @cidade.Id - Nome: @cidade.Nome</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Nenhuma cidade cadastrada ainda.</p>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
